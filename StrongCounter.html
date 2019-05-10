@@ -62,7 +62,7 @@
 
 		    let j = 0
     	    for(let i in data) {
-    	    	tableData[j++] = {num: i, amount: data[i]}
+    	    	tableData[j++] = {num: i.substring(1), amount: data[i]}
 		    }
 
 	    	return tableData
