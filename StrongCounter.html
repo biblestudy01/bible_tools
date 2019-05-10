@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+
+<div id="app">
+	<el-input
+	  type="textarea"
+	  :autosize="{ minRows: 2, maxRows: 10}"
+	  placeholder="请输入内容"
+	  v-model="textarea1">
+	</el-input>
+
+	<template>
+	  <el-table
+	    :data="tableData"
+	    stripe
+	    style="width: 100%">
+	    <el-table-column
+	      prop="num"
+	      label="编号"
+	      width="180">
+	    </el-table-column>
+	    <el-table-column
+	      prop="amount"
+	      label="数量"
+	      sortable
+	      width="180">
+	    </el-table-column>
+	  </el-table>
+	</template>
+
+</div>
+
+<script type="text/javascript">
+	new Vue({
+	  el: '#app',
+
+	  data: {
+	    textarea1: '',
+        tableData: []
+	  },
+
+	  methods: {
+	    count: function (val) {
+	    	let patt = /[GHgh]\d+/g
+	    	let res = val.match(patt)
+	    	let data = {}
+	    	let tableData = []
+    	    for(let i in res) {
+        		if (data.hasOwnProperty(res[i])) {
+        			data[res[i]]++;
+        		} else {
+        			data[res[i]] = 1
+        		}
+		    }
+
+		    let j = 0
+    	    for(let i in data) {
+    	    	tableData[j++] = {num: i, amount: data[i]}
+		    }
+
+	    	return tableData
+	    }
+	  },
+
+	  watch: {
+	    textarea1: function (newVal, oldVal) {
+	      this.tableData = this.count(newVal)
+	    }
+	  },
+
+	})
+</script>
+
+</body>
+</html>
